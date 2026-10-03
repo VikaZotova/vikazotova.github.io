@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Виктория Зотова · Аналитик</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Golos+Text:wght@400;500;600&display=swap">
+<style>
+/* Layout: инженерная сетка. Узкий контейнер, строгие полосы, моноширинные коды ячеек как подписи. */
+:root{
+  --bg:#FFFFFF; --surface:#F5F7FA; --fg:#111418; --muted:#3A414B; --faint:#5B6470;
+  --line:#E3E6EB; --line-strong:#111418; --cell:#C9CED6;
+  --accent:#1F4FD1; --accent-hover:#163A9C; --accent-ink:#FFFFFF; --accent-soft:#EAF0FD;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Golos Text',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F141B; --surface:#161D27; --fg:#E6EBF2; --muted:#B4BDCA; --faint:#8C97A7;
+  --line:#263040; --line-strong:#E6EBF2; --cell:#344155;
+  --accent:#86A6FF; --accent-hover:#A9C0FF; --accent-ink:#0B1220; --accent-soft:#1A2744; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F141B; --surface:#161D27; --fg:#E6EBF2; --muted:#B4BDCA; --faint:#8C97A7;
+  --line:#263040; --line-strong:#E6EBF2; --cell:#344155;
+  --accent:#86A6FF; --accent-hover:#A9C0FF; --accent-ink:#0B1220; --accent-soft:#1A2744; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.55;padding-inline:20px}
+.wrap{max-width:1120px;margin-inline:auto}
+a{color:var(--accent)} a:hover{color:var(--accent-hover)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:600}
+p{margin:0}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:.02em}
+.code{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em}
+
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:18px;flex-wrap:wrap}
+.brand{font-family:var(--mono);font-weight:500;font-size:15px;color:var(--fg);text-decoration:none}
+.brand span{color:var(--accent)}
+.navlinks{display:flex;gap:22px;align-items:center;font-family:var(--mono);font-size:14px;flex-wrap:wrap}
+.navlinks a{color:var(--muted);text-decoration:none}
+.navlinks a:hover{color:var(--fg)}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.lang button{font:inherit;font-family:var(--mono);font-size:13px;background:transparent;color:var(--muted);border:0;padding:6px 10px;cursor:pointer;min-height:32px}
+.lang button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+
+header.hero{padding-block:72px 56px;display:grid;gap:24px}
+.hero h1{font-size:clamp(34px,5.4vw,60px);line-height:1.06;letter-spacing:-.02em;max-width:22ch}
+.hero p.lead{font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:62ch}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:4px;font-weight:600;font-size:16px;text-decoration:none;min-height:48px}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:var(--accent-hover);color:var(--accent-ink)}
+.btn.ghost{border:1.5px solid var(--line-strong);color:var(--fg)}
+.btn.ghost:hover{background:var(--surface);color:var(--fg)}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-top:2px solid var(--line-strong)}
+.stat{padding:22px 22px 24px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.stat+.stat{border-left:1px solid var(--line)}
+.stat .n{font-size:clamp(30px,3.4vw,42px);font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.stat .t{font-size:15px;color:var(--muted)}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat:nth-child(3){border-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}}
+
+section.block,footer.contact{scroll-margin-top:84px}
+section.block{padding-block:72px 8px;display:grid;gap:28px}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.sechead h2{font-size:clamp(26px,3vw,34px)}
+.sechead h2 small{font-family:var(--mono);font-size:15px;color:var(--faint);font-weight:400;margin-left:6px}
+
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.skill{background:var(--bg);padding:24px;display:grid;gap:10px;align-content:start;min-width:0}
+.skill h3{font-size:19px}
+.skill p{color:var(--muted);font-size:16px}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font:inherit;font-family:var(--mono);font-size:13px;padding:8px 14px;border-radius:999px;border:1px solid var(--cell);background:transparent;color:var(--fg);cursor:pointer;min-height:36px}
+.chip[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+
+.cases{display:grid;gap:20px}
+.case{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:clamp(22px,3vw,40px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px}
+.case .body{display:grid;gap:16px;min-width:0}
+.case h3{font-size:clamp(22px,2.4vw,28px);line-height:1.2}
+.rows{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px 18px;font-size:16px}
+.rows dt{font-weight:600}
+.rows dd{margin:0;color:var(--muted)}
+.prodnotes{display:grid;gap:8px;padding:16px 18px;background:var(--bg);border:1px solid var(--line);border-radius:4px}
+.prodnotes .code{color:var(--accent)}
+.prodnotes ul{margin:0;padding-left:18px;color:var(--muted);font-size:16px;display:grid;gap:6px}
+.cells{width:300px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;align-content:center}
+.cells div{height:58px;border:1px solid var(--cell);background:var(--bg);border-radius:3px;font-family:var(--mono);font-size:12px;color:var(--faint);padding:6px}
+.cells div.on{border:1.5px solid var(--accent);background:var(--accent-soft);color:var(--accent)}
+@media (max-width:820px){.case{grid-template-columns:minmax(0,1fr)}.cells{width:100%;max-width:340px}.rows{grid-template-columns:minmax(0,1fr)}.rows dt{margin-top:6px}}
+
+.mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.mini div{border:1px solid var(--line);border-radius:4px;padding:16px;display:grid;gap:6px;min-width:0}
+.mini b{font-weight:600}
+.mini span{color:var(--muted);font-size:15px}
+
+ol.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+ol.steps li{background:var(--bg);padding:22px;display:grid;gap:8px;align-content:start}
+ol.steps h3{font-size:18px}
+ol.steps p{color:var(--muted);font-size:15px}
+blockquote.insight{margin:0;padding:24px 0 0;border-top:2px solid var(--line-strong);font-size:clamp(20px,2.2vw,26px);font-weight:500;max-width:40ch;line-height:1.35}
+
+.clients{display:flex;flex-wrap:wrap;gap:10px 28px;font-size:17px;color:var(--muted)}
+.industries{display:flex;flex-wrap:wrap;gap:8px}
+.industries span{font-family:var(--mono);font-size:13px;border:1px solid var(--line);border-radius:3px;padding:5px 10px;color:var(--muted)}
+
+.timeline{display:grid;border-top:1px solid var(--line)}
+.trow{display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px;padding-block:16px;border-bottom:1px solid var(--line)}
+.trow .y{font-family:var(--mono);font-size:14px;color:var(--faint);font-variant-numeric:tabular-nums;padding-top:2px}
+.trow b{font-weight:600}
+.trow span{color:var(--muted)}
+.note{font-size:14px;color:var(--faint)}
+@media (max-width:560px){.trow{grid-template-columns:minmax(0,1fr);gap:4px}}
+
+.edu{display:grid;gap:8px;color:var(--muted)}
+
+footer.contact{margin-top:80px;padding-block:56px 64px;border-top:2px solid var(--line-strong);display:grid;gap:20px}
+footer.contact h2{font-size:clamp(26px,3vw,36px)}
+.tg{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.handle{font-family:var(--mono);font-size:18px;user-select:all;padding:12px 14px;border:1px solid var(--line);border-radius:4px}
+.copy{font:inherit;font-family:var(--mono);font-size:14px;background:transparent;border:1px solid var(--cell);color:var(--fg);border-radius:4px;padding:12px 14px;cursor:pointer;min-height:48px}
+.copied{font-family:var(--mono);font-size:13px;color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.case{transition:border-color .15s}.case:hover{border-color:var(--cell)}}
+</style>
+</head>
+<body>
+
+<nav class="top" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top" id="brand"></a>
+    <div class="navlinks">
+      <a href="#cases" data-t="navCases"></a>
+      <a href="#method" data-t="navMethod"></a>
+      <a href="#career" data-t="navCareer"></a>
+      <a href="#contact" data-t="navContact"></a>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" id="lang-ru" data-lang="ru">RU</button>
+        <button type="button" id="lang-en" data-lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap" id="top">
+  <header class="hero">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="headline"></h1>
+    <p class="lead" id="lead"></p>
+    <div class="ctas">
+      <a class="btn primary" href="https://t.me/vizzotova" target="_blank" rel="noopener" data-t="ctaTask"></a>
+      <a class="btn ghost" href="https://t.me/vizzotova" target="_blank" rel="noopener" data-t="ctaRole"></a>
+    </div>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <section class="block" id="skills-sec">
+    <div class="sechead"><h2 data-t="skillsTitle"></h2></div>
+    <div class="skills" id="skills"></div>
+  </section>
+
+  <section class="block" id="cases">
+    <div class="sechead">
+      <h2><span data-t="casesTitle"></span><small id="caseCount"></small></h2>
+      <div class="filters" id="filters" role="group"></div>
+    </div>
+    <div class="cases" id="caseList"></div>
+    <div>
+      <h3 style="font-size:20px;margin-bottom:14px" data-t="wmsTitle"></h3>
+      <div class="mini" id="wms"></div>
+    </div>
+  </section>
+
+  <section class="block" id="method">
+    <div class="sechead"><h2 data-t="methodTitle"></h2></div>
+    <ol class="steps" id="steps"></ol>
+    <blockquote class="insight" id="insight"></blockquote>
+  </section>
+
+  <section class="block" id="clients">
+    <div class="sechead"><h2 data-t="clientsTitle"></h2></div>
+    <div class="clients" id="clientList"></div>
+    <div class="industries" id="industries"></div>
+  </section>
+
+  <section class="block" id="career">
+    <div class="sechead"><h2 data-t="careerTitle"></h2></div>
+    <div class="timeline" id="timeline"></div>
+    <p class="note" data-t="careerNote"></p>
+  </section>
+
+  <section class="block" id="edu">
+    <div class="sechead"><h2 data-t="eduTitle"></h2></div>
+    <div class="edu" id="eduList"></div>
+  </section>
+
+  <footer class="contact" id="contact">
+    <h2 data-t="contactTitle"></h2>
+    <p style="color:var(--muted);max-width:60ch" data-t="contactText"></p>
+    <div class="tg">
+      <a class="btn primary" href="https://t.me/vizzotova" target="_blank" rel="noopener" data-t="contactBtn"></a>
+      <span class="handle" id="handle">@vizzotova</span>
+      <button type="button" class="copy" id="copyBtn" data-t="copy"></button>
+      <span class="copied" id="copied" aria-live="polite"></span>
+    </div>
+  </footer>
+</main>
+
+<script>
+const VARIANT = 'analyst';
+
+const UI = {
+  ru:{navCases:'Кейсы',navMethod:'Подход',navCareer:'Карьера',navContact:'Контакты',ctaTask:'Обсудить задачу',ctaRole:'Обсудить вакансию',
+    casesTitle:'Кейсы',wmsTitle:'Ещё WMS-внедрения «Адресного склада»',methodTitle:'Как я работаю',clientsTitle:'Среди клиентов',careerTitle:'Карьера',
+    careerNote:'С 2021 года я работаю как независимый специалист, поэтому проекты 2021-2026 годов шли параллельно.',eduTitle:'Сертификаты и образование',
+    contactTitle:'Обсудим вашу задачу или вакансию',contactText:'Работаю удалённо. Пишите в Telegram, отвечаю в течение дня.',contactBtn:'Написать в Telegram',copy:'Скопировать',copied:'Скопировано',copyFail:'Выделите и скопируйте вручную',
+    all:'Все',task:'Задача',solution:'Решение',result:'Результат',role:'Роль',prodLabel:'// продуктовые решения'},
+  en:{navCases:'Cases',navMethod:'Approach',navCareer:'Career',navContact:'Contact',ctaTask:'Discuss a project',ctaRole:'Discuss a role',
+    casesTitle:'Case studies',wmsTitle:'More WMS implementations of Address Warehouse',methodTitle:'How I work',clientsTitle:'Selected clients',careerTitle:'Career',
+    careerNote:'Since 2021 I have worked as an independent consultant, so projects in 2021-2026 ran in parallel.',eduTitle:'Certificates and education',
+    contactTitle:"Let's discuss your project or role",contactText:'Remote only. Message me on Telegram, I usually reply within a day.',contactBtn:'Message on Telegram',copy:'Copy',copied:'Copied',copyFail:'Select and copy manually',
+    all:'All',task:'Challenge',solution:'Solution',result:'Result',role:'Role',prodLabel:'// product decisions'}
+};
+
+const V = {
+  analyst:{
+    brand:{ru:'zotova<span>/</span>analyst',en:'zotova<span>/</span>analyst'},
+    eyebrow:{ru:'// Виктория Зотова · Ведущий аналитик 1С · Архитектор решений',en:'// Victoria Zotova · Lead 1C business analyst · Solution architect'},
+    headline:{ru:'Проектирую учёт, в котором каждая вещь и каждый рубль на своём месте',en:'I design accounting where every item and every rouble has its place'},
+    lead:{ru:'20+ лет автоматизации бизнеса на 1С: от склада на прототипе космического корабля и собственного WMS-продукта до управленческого учёта в строительстве и системы для сети ресторанов.',
+          en:'20+ years of business automation on 1C, from a warehouse inside a spacecraft mock-up and my own WMS product to management accounting in construction and an operations system for a restaurant chain.'},
+    stats:[
+      {c:'A-01',n:'20+',ru:'лет в автоматизации бизнеса',en:'years in business automation'},
+      {c:'A-02',n:'300+',ru:'компаний на моём WMS-продукте',en:'companies on the WMS product I built'},
+      {c:'A-03',n:'30+',ru:'партнёров 1С внедряли продукт',en:'1C partner firms implemented it'},
+      {c:'A-04',n:{ru:'в 10 раз',en:'10×'},ru:'меньше расхождений на инвентаризациях в сети ресторанов',en:'fewer stock-count discrepancies in a restaurant chain'}
+    ],
+    skillsTitle:{ru:'Чем я полезна',en:'What I do'},
+    skills:[
+      {ru:['Обследование и концепция','Разбираюсь, как бизнес работает на самом деле, нахожу, где теряются деньги и время, и предлагаю план автоматизации по этапам.'],en:['Discovery and concept','I map how the business really works, find where time and money leak, and propose a phased automation plan.']},
+      {ru:['Склад и WMS','Адресное хранение, штрихкодирование, ТСД, сроки годности и партии, биллинг складских операций для логистов.'],en:['Warehousing and WMS','Location-based storage, barcoding, handheld terminals, batches and expiry dates, billing of warehouse operations for 3PL providers.']},
+      {ru:['Управленческий учёт','БИТ:Финанс, учёт по проектам и ЦФО, БДР и БДДС, план-факт, сверка с бухучётом, отчёты на СКД.'],en:['Management accounting','BIT:Finance, project and cost-centre accounting, P&L and cash-flow budgets, plan vs actual, reconciliation, 1C reports.']},
+      {ru:['Миграции и интеграции','Перенос с SAP на 1С, интеграции с iiko, Telegram, сметными программами. Мэппинг, обработки переноса, сверка.'],en:['Migrations and integrations','SAP to 1C migration; integrations with iiko, Telegram and estimating software. Mapping, migration tools, reconciliation.']},
+      {ru:['Системы с нуля','От тиражного продукта со статусом «1С:Совместимо» до low-code системы на Bubble для 100 сотрудников ресторанов.'],en:['Systems from scratch','From an off-the-shelf "1C:Compatible" product to a low-code Bubble system for 100 restaurant staff.']}
+    ],
+    order:['mars','acc','erm','veg','kortes','siemens','rent'],
+    steps:{ru:[['Обследование','Говорю с собственником, финансами и теми, кто работает руками. Смотрю реальные таблицы и чаты, а не регламенты.'],['Концепция','Целевой процесс и этапы, где каждый этап полезен сам по себе.'],['Старт с простого','Первой запускаю задачу, которую люди быстро освоят: табели, заказ обедов. Сложное подключаю потом.'],['Сверка данных','Эталонные данные и регулярная сверка между системами. Без них отчёты красивые, но неверные.'],['Передача','Документация, обучение, регламенты. Система должна жить без меня.']],
+           en:[['Discovery','I talk to the owner, finance and the people doing the work, and look at real spreadsheets and chats, not policies.'],['Concept','A target process and phases where each phase pays off on its own.'],['Start simple','First I launch something people adopt quickly, such as timesheets or staff meal orders. Complexity comes later.'],['Reconciliation','Reference data and regular checks between systems. Without them reports look good and are wrong.'],['Handover','Documentation, training, procedures. The system has to live without me.']]},
+    insight:{ru:'Хорошая система снимает с людей рутину и даёт цифры, на которые можно опереться в решениях.',en:'A good system takes routine off people and gives them numbers they can rely on to make decisions.'}
+  },
+  product:{
+    brand:{ru:'zotova<span>/</span>product',en:'zotova<span>/</span>product'},
+    eyebrow:{ru:'// Виктория Зотова · Product Owner · B2B и внутренние продукты',en:'// Victoria Zotova · Product owner · B2B and internal products'},
+    headline:{ru:'Строю продукты, которыми пользуются склады, кухни и финансисты',en:'I build products that warehouses, kitchens and finance teams actually use'},
+    lead:{ru:'Продакт с опытом рыночного и внутренних продуктов. 12 лет развивала собственный WMS для 300+ компаний, потом строила внутренние системы для сети ресторанов и строительной компании. Сама исследую пользователей, приоритизирую и собираю решение.',
+          en:'A product owner with both market and internal product experience. For 12 years I grew my own WMS to 300+ companies, then built internal systems for a restaurant chain and a construction company. I research users, prioritise and build the solution myself.'},
+    stats:[
+      {c:'P-01',n:'300+',ru:'компаний купили мой WMS-продукт',en:'companies bought my WMS product'},
+      {c:'P-02',n:'12',ru:'лет развития продукта командой из двух человек',en:'years of product growth with a team of two'},
+      {c:'P-03',n:'×10',ru:'меньше расхождений после запуска внутренней системы',en:'fewer stock discrepancies after an internal product launch'},
+      {c:'P-04',n:'30→3',ru:'отдел учёта вернулся к исходному размеру',en:'accounting team back to its original size'}
+    ],
+    skillsTitle:{ru:'Что я делаю как продакт',en:'What I do as a product owner'},
+    skills:[
+      {ru:['Исследование пользователей','Езжу на склады и кухни, смотрю, как люди работают, собираю жалобы и запросы. Подписка на обновления у меня работала как постоянный канал обратной связи.'],en:['User research','I go to warehouses and kitchens, watch people work, and collect complaints and requests. In my own product the update subscription doubled as a permanent feedback channel.']},
+      {ru:['Приоритизация и роадмап','Выбираю то, что даёт самый большой и быстрый эффект. Частные «хотелки» отделяю от развития продукта и превращаю в платные доработки.'],en:['Prioritisation and roadmap','I pick what gives the largest and fastest impact, and separate one-client wishes from the product, turning them into paid custom work.']},
+      {ru:['Монетизация и канал','Ценовая лестница от 20 до 150 тыс. руб., модуль-допродажа, годовая подписка 10%. Канал из 30+ партнёров 1С и сайт, который продавал сам.'],en:['Monetisation and channel','A price ladder from 20k to 150k roubles, an add-on module, a 10% annual subscription. A channel of 30+ 1C partners and a website that sold on its own.']},
+      {ru:['Внедрение и adoption','Запускаю первым то, что выгодно самим пользователям, чтобы все сразу начали работать в системе. Потом подключаю учётные модули.'],en:['Rollout and adoption','I launch first what benefits users themselves so everyone starts using the system, then add the accounting modules.']},
+      {ru:['Сама собираю','Проектирую и собираю решения на 1С и Bubble, пишу ТЗ на интеграции. Разработчикам не приходится переводить с языка бизнеса.'],en:['Hands-on build','I design and build on 1C and Bubble and write integration specs, so nothing gets lost between business and developers.']}
+    ],
+    order:['kortes','veg','acc','mars','erm','siemens','rent'],
+    steps:{ru:[['Наблюдение','Иду туда, где работают пользователи. Склад, кухня, бухгалтерия: смотрю на реальные таблицы и чаты.'],['Гипотеза эффекта','Формулирую, какую ручную работу уберём и как это измерим: часы, ошибки, расхождения, размер команды.'],['Первый модуль с личной выгодой','Начинаю с функции, которая выгодна самому пользователю. Так система становится привычной.'],['Сверка и метрики','Проверяю, что данные верны, и смотрю на эффект: расхождения, время на отчёт, продления.'],['Бэклог из запросов','Запросы пользователей собираю в план развития, частные отделяю и монетизирую.']],
+           en:[['Observe','I go where users work: warehouse, kitchen, accounting, and look at real spreadsheets and chats.'],['Impact hypothesis','What manual work we remove and how we measure it: hours, errors, discrepancies, team size.'],['First module users want','Start with a feature that benefits users personally so the system becomes a habit.'],['Reconcile and measure','Make sure the data is right and track impact: discrepancies, report time, renewals.'],['Backlog from requests','Turn user requests into a roadmap; separate one-off wishes and charge for them.']]},
+    insight:{ru:'Лучший канал исследований для B2B-продукта: подписка, ради которой клиенты сами пишут, чего им не хватает.',en:'The best research channel for a B2B product is a subscription that makes clients tell you what is missing.'}
+  }
+};
+
+const CASES = {
+  mars:{tags:['wh'],cells:true,code:{ru:'WMS · ИМБП РАН · Марс-500 · 2010',en:'WMS · Institute of Biomedical Problems · Mars-500 · 2010'},
+    title:{ru:'Склад, у которого вместо стеллажей пол и стены корабля',en:'A warehouse where the shelves were the floor and walls of a spacecraft'},
+    task:{ru:'Разместить продукты, бытовые принадлежности, оборудование и расходники на все 520 дней эксперимента внутри макета корабля. Складских помещений нет: две морозильные камеры и ниши в полу и стенах.',en:'Store food, supplies, equipment and consumables for all 520 days of the experiment inside a spacecraft mock-up with no storage rooms: two freezers and cavities in the floor and walls.'},
+    sol:{ru:'Каждая ниша стала пронумерованной ячейкой со штрихкодом. При загрузке предмет сканировали вместе с ячейкой, перемещения и списания тоже через ТСД. Интерфейс и вся номенклатура на русском и английском.',en:'Every cavity became a numbered, barcoded location. Items were scanned with their location at loading; moves and write-offs went through handheld terminals too. Interface and item catalogue in Russian and English.'},
+    res:{ru:'Экипаж из шести человек из четырёх стран находил любой предмет поиском на двух ТСД. Система отработала весь эксперимент без поддержки извне.',en:'A six-person crew from four countries found any item by search on two handhelds. The system ran for the whole experiment with no outside support.'},
+    role:{ru:'Автор решения и внедрение. Тендер выигран по приглашению заказчика.',en:'Solution author and implementation; won the tender on the client\'s invitation.'}},
+  acc:{tags:['con','fin'],code:{ru:'Строительство · БИТ:Финанс · 9 месяцев',en:'Construction · BIT:Finance · 9 months'},
+    title:{ru:'Прибыльность проекта: несколько дней споров против одной кнопки',en:'Project profitability: from days of arguing to one button'},
+    task:{ru:'Строительная компания: 5 юрлиц, около 30 строительных объектов одновременно. Только бухучёт с условным делением на проекты, у каждого руководителя проекта свой Excel. Руководство не видело, какой проект прибыльный и где затянутые сроки уже съели бюджет.',en:'A construction company with 5 legal entities and ~30 construction sites at once. Only statutory accounting with nominal project splits; every project manager kept a private spreadsheet. Leadership could not see which projects made money or where delays had eaten the budget.'},
+    sol:{ru:'Обязательные табели с согласованием, распределение зарплаты из ЗУП по проектам, справочники под реальную структуру договоров, перенос и сверка БУ и УУ, финмодель бонусов команды, упрощённый интерфейс бюджетов БДР и БДДС для руководителей проектов, разграничение доступа.',en:'Mandatory approved timesheets, payroll allocation to projects by hours, master data rebuilt around real contracts, statutory-to-management migration with reconciliation, team bonus model, a simplified budgeting interface for project managers, role-based access.'},
+    res:{ru:'Отчёт по проекту за секунды вместо нескольких дней. 50-60 сотрудников ведут табели, 12 руководителей проектов планируют бюджеты, около 25 отчётов. По реальным трудозатратам руководство перестроило состав команд.',en:'A project report in seconds instead of days. 50-60 employees log time, 12 project managers plan budgets, ~25 reports. Real effort data changed how leadership staffs teams.'},
+    role:{ru:'Весь цикл в одиночку, от обследования до сопровождения, плюс функции финансового аналитика.',en:'End-to-end on my own, from discovery to support, also covering the financial analyst role.'},
+    prod:{ru:['Начала с табелей: самая простая задача приучила 50-60 человек к системе.','Сделала отдельный простой интерфейс бюджетов, потому что типовой перегружен для небухгалтеров.','Внутренний продукт с измеримым эффектом: дни работы превратились в секунды.'],en:['Started with timesheets: the simplest task got 50-60 people into the system.','Built a separate simple budgeting UI because the standard one overwhelms non-accountants.','An internal product with measurable impact: days of work became seconds.']}},
+  erm:{tags:['ret'],code:{ru:'Розница · FMCG · 1С:КА · Первый БИТ',en:'Retail · FMCG · 1C · First BIT'},
+    title:{ru:'Ермолино: сроки годности, которых нет в системе',en:'Ermolino: expiry dates the system did not have'},
+    task:{ru:'Розничная сеть около 3000 точек по всей России, распределительные склады, скоропортящиеся товары. Отчётность собиралась в Excel с опозданием на несколько дней, а партии со сроками годности в учёте не хранились.',en:'A retail chain of about 3,000 stores across Russia with distribution warehouses and perishable goods. Reporting came from Excel several days late, and batches with expiry dates were not tracked.'},
+    sol:{ru:'Алгоритм восстанавливает партии и сроки годности каждого остатка по истории движения за 55 дней: FIFO, обработка расхождений, товары-аналоги. На нём 15 отчётов для руководителей подразделений и менеджеров точек: обнуления, перетарка, прогноз просрочки, нарушение свежести, недовозы и перевозы, точки без продаж, нарушение режима работы, поздняя доставка.',en:'An algorithm rebuilds batches and expiry dates for every balance from 55 days of movements: FIFO, discrepancy handling, substitute items. On top of it, 15 reports for regional and store managers: stock-outs, overstock, expiry forecast, freshness breaches, short and over deliveries, stores with no sales, broken opening hours, late deliveries.'},
+    res:{ru:'Оперативная отчётность в один клик вместо Excel с отставанием в несколько дней.',en:'Up-to-date reporting in one click instead of days-old spreadsheets.'},
+    role:{ru:'Аналитик: автор ТЗ, алгоритмов и отчётов.',en:'Analyst: author of the specifications, algorithms and reports.'}},
+  veg:{tags:['food'],code:{ru:'Общепит · Bubble · iiko · 2022-2026',en:'Hospitality · Bubble · iiko · 2022-2026'},
+    title:{ru:'Повар не должен быть оператором учётной системы',en:'A chef should not have to be an accounting clerk'},
+    task:{ru:'Сеть из 7 ресторанов веганского питания и производственных цехов. Повара писали приёмки и списания в чаты свободным текстом и после смены переносили в iiko. Названия не совпадали с техкартами, отдел учёта вырос с 3 до 30 человек, а учёт оставался приблизительным.',en:'A chain of 7 vegan restaurants and production kitchens. Chefs logged receipts and write-offs as free text in chats and re-keyed them into iiko after their shift. Names did not match recipe cards, the accounting team grew from 3 to 30, and stock figures stayed approximate.'},
+    sol:{ru:'Операции с телефона в один клик и фото к каждому списанию. Справочники выровнены с iiko, повар видит только позиции своей точки, ночью документы сами уходят в iiko. Заказ обедов сотрудников в пределах лимита с рабочим местом для цеха. Учёт рабочего времени и расчёт зарплаты: каждый сотрудник видит свой расчётный листок в личном кабинете.',en:'One-tap operations from a phone with a photo for every write-off. Master data aligned with iiko, each kitchen sees only its items, and documents post to iiko every night. Staff meal ordering within a limit with a kitchen workstation. Time tracking and payroll: every employee sees their payslip in a personal account on the phone.'},
+    res:{ru:'Отдел учёта вернулся к исходному размеру, расхождения на инвентаризациях сократились примерно в 10 раз, у поваров ушла вечерняя работа в iiko. Собственники получили отчёты об эффективности сотрудников и точек.',en:'The accounting team went back to its original size, stock-count discrepancies fell about tenfold, and chefs stopped spending evenings in iiko. Owners got performance reports by staff and location.'},
+    role:{ru:'Проектирование и сборка на Bubble, ТЗ на интеграцию с iiko. В команде разработчик интеграции и аналитик.',en:'Designed and built the Bubble system, wrote the iiko integration spec; worked with an integration developer and an analyst.'},
+    prod:{ru:['Исследование: ездила по точкам, смотрела работу кухни, собирала жалобы сама и через аналитика.','Первым запустила заказ обедов: личная выгода каждого сотрудника, и все сразу научились работать в приложении.','Приоритеты по самому быстрому и крупному эффекту. Следующие в роадмапе: заготовки и заявки на закупку.'],en:['Research: visited every location, watched the kitchens, collected complaints directly and via an analyst.','Launched staff meal ordering first: a personal benefit for everyone, so the whole team learned the app at once.','Prioritised by fastest, largest impact. Next on the roadmap: prep planning and purchase requests.']}},
+  kortes:{tags:['wh','prod'],code:{ru:'Продукт · WMS · Кортес · 2007-2019',en:'Product · WMS · Kortes · 2007-2019'},
+    title:{ru:'«Адресный склад»: заказная WMS, которая стала продуктом на 300+ компаний',en:'Address Warehouse: a custom WMS that became a product for 300+ companies'},
+    task:{ru:'После 6-8 заказных WMS-внедрений стало ясно, что различия между складами можно вынести в настройки. Нужен был продукт, который внедряется без доработок и без нас.',en:'After 6-8 custom WMS projects it was clear that differences between warehouses could live in settings. The goal was a product that works without custom code and without us.'},
+    sol:{ru:'Тиражный продукт со статусом «1С:Совместимо». Открытый код, чтобы штатные 1С-специалисты клиента внедряли сами, подробная документация, облегчённая версия для малого бизнеса. Версии с ТСД и без, параллельная работа кладовщиков, модуль «Биллинг» для логистов и ответхранения.',en:'An off-the-shelf "1C:Compatible" product. Open source code so clients\' in-house 1C developers could implement it, thorough documentation, a light version for small business. Versions with and without handhelds, parallel picking, a Billing module for 3PL providers.'},
+    res:{ru:'300+ компаний, больше половины продаж через 30+ партнёров-франчайзи 1С.',en:'300+ companies; more than half of sales through 30+ 1C partner firms.'},
+    role:{ru:'Автор, архитектор, ведущий разработчик и генеральный директор. Разработчик методологии адресного хранения и штрихкодирования на складе: обучала по ней специалистов партнёров, писала статьи.',en:'Author, architect, lead developer and CEO. Developed the methodology for location-based storage and barcoding in warehouses; trained partner consultants in it and wrote articles on it.'},
+    prod:{ru:['Ценовая лестница: около 20 тыс. за облегчённую версию, 100 тыс. за полный код, 150 тыс. с мобильными рабочими местами, «Биллинг» за 35 тыс. как допродажа.','Подписка на обновления: полгода бесплатно, затем 10% от лицензии в год. Клиенты стабильно продлевали.','Подписка мотивировала присылать запросы. Из них я собирала роадмап, а частные «хотелки» делала как платные доработки.','Канал: «1С:Совместимо» и стенд на семинаре 1С привели партнёров, сайт с калькулятором и демо продавал сам. Начальники складов приводили продукт в новые компании при смене работы.'],en:['Price ladder: about 20k roubles for the light version, 100k for full code, 150k with mobile workstations, Billing at 35k as an add-on.','Update subscription: six months free, then 10% of the licence per year. Clients renewed steadily.','The subscription made clients send requests. I built the roadmap from them and sold one-off wishes as paid custom work.','Channel: 1C certification and a booth at the 1C partner seminar brought partners; a website with a calculator and demo sold on its own. Warehouse managers brought the product to their next employers.']}},
+  siemens:{tags:['fin'],code:{ru:'ERP-миграция · 1С:КА · Первый БИТ',en:'ERP migration · 1C · First BIT'},
+    title:{ru:'Siemens Здравоохранение: уход SAP и сверка до копейки',en:'Siemens Healthineers Russia: SAP exits, books must still reconcile'},
+    task:{ru:'После ухода SAP из России перевести бухгалтерский и международный учёт российского подразделения Siemens Healthineers в 1С:Комплексную автоматизацию.',en:'After SAP left Russia, move statutory and international accounting of the Russian Siemens Healthineers entity to 1C.'},
+    sol:{ru:'Мэппинг данных SAP в 1С, обработки переноса остатков, справочников и открытых документов, настройка 1С. Главная сложность в сверке: исходники в виде выгруженных таблиц, другая логика хранения остатков.',en:'SAP-to-1C mapping, migration tools for balances, master data and open documents, 1C setup. The hard part was reconciliation: source data as exported tables with a different balance structure.'},
+    res:{ru:'Учёт перенесён в 1С с открытыми документами и сверенными остатками.',en:'Accounting moved to 1C with open documents and reconciled balances.'},
+    role:{ru:'Отвечала за миграцию: аналитик и разработчик обработок переноса.',en:'Owned the migration as analyst and developer of the migration tools.'}},
+  rent:{tags:['re'],code:{ru:'Недвижимость · БИТ:Аренда · Первый БИТ · 2022',en:'Real estate · BIT:Rent · First BIT · 2022'},
+    title:{ru:'Аренда с процентом от оборота, минимумом и потолком',en:'Rent as a share of turnover, with a floor and a cap'},
+    task:{ru:'Оператор коммерческой недвижимости переводил учёт аренды на БИТ:Аренда. Реальные договоры не укладывались в типовой расчёт.',en:'A commercial real estate operator was moving lease accounting to BIT:Rent. Real contracts did not fit the standard calculation.'},
+    sol:{ru:'Объекты и договоры аренды, согласование условий, автоматический расчёт аренды (процент от оборота арендатора с минимумом и потолком, ступенчатые ставки), показания счётчиков и перевыставление коммунальных услуг с надбавкой, взаиморасчёты, отчёт по задолженности, роли и права.',en:'Leased units and contracts, terms approval, automatic rent (turnover-based with floor and cap, stepped rates), meter readings and utility re-billing with markup, settlements, receivables report, role matrix.'},
+    res:{ru:'Расчёты по нестандартным договорам вошли в систему, а не в Excel.',en:'Non-standard contract terms were handled in the system instead of spreadsheets.'},
+    role:{ru:'Автор ТЗ и внедрение.',en:'Wrote the specification and led implementation.'}}
+};
+
+const TAGS = {wh:{ru:'Склад',en:'Warehouse'},con:{ru:'Строительство',en:'Construction'},fin:{ru:'Финансы',en:'Finance'},ret:{ru:'Розница',en:'Retail'},food:{ru:'Общепит',en:'Hospitality'},prod:{ru:'Продукт',en:'Product'},re:{ru:'Недвижимость',en:'Real estate'}};
+
+const WMS = [
+  {ru:['Специальные стали и сплавы','Металлопрокат, учёт длиномеров, интеграция с УПП'],en:['Special Steels and Alloys','Metal products, cut-to-length stock, UPP integration']},
+  {ru:['Фабрика дверей Браво','20+ кладовщиков с ТСД, интеграция с УПП'],en:['Bravo door factory','20+ storekeepers on handhelds, UPP integration']},
+  {ru:['Стройтерминал Центр красок','Оптовая торговля, 20+ кладовщиков с ТСД'],en:['Stroyterminal Paint Centre','Wholesale, 20+ storekeepers on handhelds']},
+  {ru:['Фаско','Первое внедрение продукта, интеграция с УПП'],en:['Fasko','First product implementation, UPP integration']},
+  {ru:['Кухонный двор','Производство мебели, интеграция с УТ'],en:['Kukhonny Dvor','Kitchen furniture manufacturing, UT integration']},
+  {ru:['Серебряный ручей','Оптовая торговля, интеграция с УТ'],en:['Serebryany Ruchey','Wholesale, UT integration']},
+  {ru:['Склады керамической плитки','Партии по оттенкам, продажа в штуках и м²'],en:['Ceramic tile warehouses','Shade batches, sold by piece and by m²']}
+];
+
+const CLIENTS = {ru:['ИМБП РАН (Марс-500)','Siemens Здравоохранение','Ермолино','Русклимат','Фабрика дверей Браво','Специальные стали и сплавы'],
+  en:['Institute of Biomedical Problems (Mars-500)','Siemens Healthineers Russia','Ermolino','Rusklimat','Bravo door factory','Special Steels and Alloys']};
+const INDUSTRIES = {ru:['склад и логистика','оптовая торговля','производство','строительство и девелопмент','общепит','розница и FMCG','коммерческая недвижимость','медицинская техника'],
+  en:['warehousing and logistics','wholesale','manufacturing','construction and development','hospitality','retail and FMCG','commercial real estate','medical technology']};
+
+const CAREER = [
+  {y:'2023-2026',ru:['ACCELERATION','Ведущий аналитик-программист 1С. Управленческий учёт и бюджетирование в строительной компании.'],en:['ACCELERATION','Lead 1C analyst-developer. Management accounting and budgeting for a construction company.'],
+   pru:['ACCELERATION','Владелец внутренней системы управленческого учёта: от концепции до запуска.'],pen:['ACCELERATION','Owner of the internal management accounting system, from concept to launch.']},
+  {y:'2022-2026',ru:['Сеть ресторанов веганского питания','Системный аналитик, проектирование и сборка системы на Bubble.'],en:['Vegan restaurant chain','Systems analyst; designed and built the Bubble system.'],
+   pru:['Сеть ресторанов веганского питания','Владелец продукта внутренней операционной системы на Bubble.'],pen:['Vegan restaurant chain','Product owner of the internal operations system on Bubble.']},
+  {y:'2021-2023',ru:['Первый БИТ','Руководитель проектов WMS, затем аналитик и разработчик ERP-проектов.'],en:['First BIT','WMS project manager, then analyst and developer on ERP projects.']},
+  {y:'2018-2020',ru:['А101','Разработчик CRM на 1С с нуля для девелопера, Agile-команда.'],en:['A101','Developer of a 1C CRM built from scratch for a property developer, Agile team.']},
+  {y:'2007-2019',ru:['Кортес','Генеральный директор, автор и архитектор продукта «Адресный склад».'],en:['Kortes','CEO, author and architect of the Address Warehouse product.'],
+   pru:['Кортес','Основатель и владелец продукта «Адресный склад»: стратегия, цены, роадмап, партнёрский канал.'],pen:['Kortes','Founder and product owner of Address Warehouse: strategy, pricing, roadmap, partner channel.']},
+  {y:'2004-2007',ru:['Сокол, Русклимат','Учётные системы и WMS на 1С с нуля: аналитик, архитектор, разработчик.'],en:['Sokol, Rusklimat','Accounting systems and a WMS built on 1C from scratch: analyst, architect, developer.']}
+];
+
+const EDU = {ru:['1С:Специалист','1С:Специалист-консультант по «Управлению торговлей»','Саратовский государственный университет, механико-математический факультет: прикладная математика и информатика (2003), информационные системы в экономике (2004)'],
+  en:['1C:Specialist','1C:Specialist-Consultant, Trade Management','Saratov State University, Faculty of Mechanics and Mathematics: Applied Mathematics and Computer Science (2003), Information Systems in Economics (2004)']};
+
+let lang = 'ru', filter = 'all';
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+function render(){
+  const v = V[VARIANT], u = UI[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-t]').forEach(el => { const k = el.dataset.t; if (u[k] !== undefined) el.textContent = u[k]; });
+  $('brand').innerHTML = v.brand[lang];
+  $('eyebrow').textContent = v.eyebrow[lang];
+  $('headline').textContent = v.headline[lang];
+  $('lead').textContent = v.lead[lang];
+  document.querySelector('[data-t="skillsTitle"]').textContent = v.skillsTitle[lang];
+  ['ru','en'].forEach(l => $('lang-'+l).setAttribute('aria-pressed', l===lang ? 'true':'false'));
+
+  $('stats').innerHTML = v.stats.map(s => `<div class="stat"><div class="code">${s.c}</div><div class="n">${esc(typeof s.n==='object'?s.n[lang]:s.n)}</div><div class="t">${esc(s[lang])}</div></div>`).join('');
+  $('skills').innerHTML = v.skills.map(s => `<div class="skill"><h3>${esc(s[lang][0])}</h3><p>${esc(s[lang][1])}</p></div>`).join('');
+
+  const usedTags = [...new Set(v.order.flatMap(k => CASES[k].tags))];
+  $('filters').setAttribute('aria-label', lang==='ru'?'Фильтр по отрасли':'Filter by industry');
+  $('filters').innerHTML = [['all',u.all],...usedTags.map(t=>[t,TAGS[t][lang]])]
+    .map(([k,l]) => `<button type="button" class="chip" id="f-${k}" data-f="${k}" aria-pressed="${filter===k}">${esc(l)}</button>`).join('');
+
+  const list = v.order.filter(k => filter==='all' || CASES[k].tags.includes(filter));
+  $('caseCount').textContent = `[${list.length}]`;
+  const cells = ['П-01','П-02','С-07','С-08','С-09','С-10','М-01','М-02'];
+  $('caseList').innerHTML = list.map(k => {
+    const c = CASES[k];
+    const prod = (VARIANT==='product' && c.prod) ? `<div class="prodnotes"><div class="code">${u.prodLabel}</div><ul>${c.prod[lang].map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
+    const vis = c.cells ? `<div class="cells" aria-hidden="true">${cells.map((x,i)=>`<div class="${i===2?'on':''}">${x}</div>`).join('')}</div>` : '';
+    return `<article class="case" id="case-${k}"><div class="body"><div class="eyebrow">${esc(c.code[lang])}</div><h3>${esc(c.title[lang])}</h3>
+      <dl class="rows"><dt>${u.task}</dt><dd>${esc(c.task[lang])}</dd><dt>${u.solution}</dt><dd>${esc(c.sol[lang])}</dd><dt>${u.result}</dt><dd>${esc(c.res[lang])}</dd><dt>${u.role}</dt><dd>${esc(c.role[lang])}</dd></dl>${prod}</div>${vis}</article>`;
+  }).join('');
+
+  $('wms').innerHTML = WMS.map(w => `<div><b>${esc(w[lang][0])}</b><span>${esc(w[lang][1])}</span></div>`).join('');
+  $('steps').innerHTML = v.steps[lang].map((s,i) => `<li><div class="code">${String(i+1).padStart(2,'0')}</div><h3>${esc(s[0])}</h3><p>${esc(s[1])}</p></li>`).join('');
+  $('insight').textContent = v.insight[lang];
+  $('clientList').innerHTML = CLIENTS[lang].map(c=>`<span>${esc(c)}</span>`).join('');
+  $('industries').innerHTML = INDUSTRIES[lang].map(c=>`<span>${esc(c)}</span>`).join('');
+  $('timeline').innerHTML = CAREER.map(r => {
+    const d = (VARIANT==='product' && r['p'+lang]) ? r['p'+lang] : r[lang];
+    return `<div class="trow"><div class="y">${r.y}</div><div><b>${esc(d[0])}</b><br><span>${esc(d[1])}</span></div></div>`;
+  }).join('');
+  $('eduList').innerHTML = EDU[lang].map(e=>`<div>${esc(e)}</div>`).join('');
+  $('copied').textContent = '';
+}
+
+document.addEventListener('click', e => {
+  const lb = e.target.closest('[data-lang]');
+  if (lb){ lang = lb.dataset.lang; try{ localStorage.setItem('vz-lang', lang); }catch(_){} render(); return; }
+  const fb = e.target.closest('[data-f]');
+  if (fb){ filter = fb.dataset.f; render(); return; }
+});
+$('copyBtn').addEventListener('click', () => {
+  const done = ok => { $('copied').textContent = ok ? UI[lang].copied : UI[lang].copyFail; };
+  try{
+    navigator.clipboard.writeText('@vizzotova').then(()=>done(true)).catch(()=>{ selectHandle(); done(false); });
+  }catch(_){ selectHandle(); done(false); }
+});
+function selectHandle(){ const r = document.createRange(); r.selectNodeContents($('handle')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+
+try{ const saved = localStorage.getItem('vz-lang'); if (saved==='en'||saved==='ru') lang = saved; }catch(_){}
+if (location.hash === '#en') lang = 'en';
+render();
+</script>
+</body>
+</html>
